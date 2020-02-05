@@ -31,5 +31,11 @@ const failRandomlyMiddleware = (req, res, next) => {
 
 app.use(loggingMiddleware); //3. Middleware at the application level will be called for each request
 
-app.get("/", failRandomlyMiddleware, (req, res) => res.send("Hello")); // 3. dd this middleware at the route level.
+app
+  .get("/", failRandomlyMiddleware, (req, res) => res.send("Hello")) // 3. dd this middleware at the route level.
+
+  //  1. Add a second route to respond to /foo. Do not add the failRandomlyMiddleware.
+  //  2. Confirm that the /foo does include the custom X-Codaisseur-Time, but does not fail randomly.
+  //    Neat thing about true randomness is that you can never be sure... Try several times until you're "confident".
+  .get("/foo", (req, res) => res.send("foooo!"));
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
